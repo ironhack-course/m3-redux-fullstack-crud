@@ -1,7 +1,8 @@
 import React from 'react';
 import { IAssetAction } from './ShowAssets';
 import { ActionType, IAction } from '../framework/IAction';
-import { IAssetData, IState } from '../state/appState'
+import { IAssetData, IState } from '../state/appState';
+import axios from 'axios';
 
 import { IWindow } from '../framework/IWindow';
 import { reducerFunctions } from '../reducer/appReducer';
@@ -110,6 +111,8 @@ export default class SimpleAsset extends React.PureComponent<IProps, IJSXState> 
 
 
     handleSave(event: any) {
+        axios.post('http://localhost:8080/assets/update/' + this.props.asset._id, this.props.asset)
+            .then(res => console.log(res.data));
         this.setState({ edit_mode: false });
     }
     handleDelete() {
@@ -118,6 +121,8 @@ export default class SimpleAsset extends React.PureComponent<IProps, IJSXState> 
             asset: this.props.asset
         }
         window.CS.clientAction(action)
+        axios.get('http://localhost:8080/assets/delete/' + this.props.asset._id)
+            .then(res => console.log(res.data));
     }
     handleRerenderTest(event: any) {
         const action: IAction = {

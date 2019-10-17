@@ -6,6 +6,7 @@ import { IAction, ActionType } from '../framework/IAction';
 import {IAssetData} from '../state/appState'
 
 import { IWindow } from '../framework/IWindow'
+import axios from 'axios';
 declare let window: IWindow;
 
 
@@ -49,5 +50,7 @@ export default class ShowAssets extends Component {
           asset: newAsset
         }
         window.CS.clientAction(action);
+        axios.post('http://localhost:8080/assets/add', newAsset)
+        .then(res => console.log(res.data));
       }
 }
